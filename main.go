@@ -121,7 +121,7 @@ func clickLeftMouse() {
 // 全域變數用來追蹤是否運行中
 var isRunning = false
 var spaceTime = 100 * time.Millisecond
-var otherTime = 250 * time.Millisecond
+var otherTime = 100 * time.Millisecond
 
 // 快跑鴨
 func function_1() {
@@ -162,7 +162,7 @@ func function_2() {
 	time.Sleep(spaceTime)
 }
 
-// 滑鼠左鍵連點
+// 主要技能滑鼠右鍵連點
 func function_3() {
 	clickRightMouse()
 	time.Sleep(spaceTime)
@@ -190,6 +190,23 @@ func function_3() {
 
 }
 
+// 只放1.2.3.4 輔助技能
+func function_4() {
+
+	pressKey(VK_1)
+	time.Sleep(otherTime)
+
+	pressKey(VK_2)
+	time.Sleep(otherTime)
+
+	pressKey(VK_3)
+	time.Sleep(otherTime)
+
+	pressKey(VK_4)
+	time.Sleep(otherTime)
+
+}
+
 // startLoop 控制無窮迴圈按鍵
 func startLoop(stop chan bool) {
 
@@ -198,7 +215,7 @@ func startLoop(stop chan bool) {
 		case <-stop: // 接收到停止訊號，結束迴圈
 			return
 		default:
-			funcMove()
+			function_3()
 		}
 	}
 }
