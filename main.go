@@ -22,6 +22,7 @@ const (
 	VK_3       = 0x33 // 3 鍵
 	VK_4       = 0x34 // 4 鍵
 	VK_SPACE   = 0x20 // 空白鍵 (Space)
+	VK_F 	= 0x46 // F 鍵
 )
 const (
 	MOUSEEVENTF_MOVE     = 0x0001
@@ -100,21 +101,21 @@ func mouse_event(dwFlags, dx, dy, dwData, dwExtraInfo uintptr) {
 // pressKey 函數模擬按下和釋放按鍵
 func pressKey(key uintptr) {
 	keybd_event(key, 0, 0, 0)               // 按下鍵
-	time.Sleep(50 * time.Millisecond)       // 模擬按下的時間
+	time.Sleep(100 * time.Millisecond)       // 模擬按下的時間
 	keybd_event(key, 0, KEYEVENTF_KEYUP, 0) // 釋放鍵
 }
 
 // clickRightMouse 函數模擬滑鼠右鍵點擊
 func clickRightMouse() {
 	mouse_event(MOUSEEVENTF_RIGHTDOWN, 0, 0, 0, 0) // 按下右鍵
-	time.Sleep(50 * time.Millisecond)              // 按住一段時間
+	time.Sleep(1000 * time.Millisecond)              // 按住一段時間
 	mouse_event(MOUSEEVENTF_RIGHTUP, 0, 0, 0, 0)   // 釋放右鍵
 }
 
 // 模擬滑鼠左鍵點擊
 func clickLeftMouse() {
 	mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0) // 按下左鍵
-	time.Sleep(50 * time.Millisecond)             // 按住一段時間
+	time.Sleep(100 * time.Millisecond)             // 按住一段時間
 	mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)   // 釋放左鍵
 }
 
@@ -207,6 +208,22 @@ func function_4() {
 
 }
 
+// 只放1 輔助技能
+func function_only_one() {
+
+	pressKey(VK_1)
+	time.Sleep(otherTime)
+	pressKey(VK_2)
+	time.Sleep(otherTime)
+	pressKey(VK_3)
+	time.Sleep(otherTime)
+	clickRightMouse()
+	time.Sleep(5*otherTime)
+	pressKey(VK_F)
+	time.Sleep(25*otherTime)
+
+}
+
 // startLoop 控制無窮迴圈按鍵
 func startLoop(stop chan bool) {
 
@@ -215,7 +232,7 @@ func startLoop(stop chan bool) {
 		case <-stop: // 接收到停止訊號，結束迴圈
 			return
 		default:
-			function_3()
+			function_only_one()
 		}
 	}
 }
